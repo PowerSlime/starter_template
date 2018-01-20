@@ -1,3 +1,6 @@
+# Dist folder goes to gh-pages branch
+dist/
+
 # Logs
 logs
 *.log
