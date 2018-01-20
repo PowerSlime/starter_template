@@ -35,3 +35,8 @@ When your **dist** have updates you can "upload" it by doing commits in **gh-pag
     git commit -m "Some changes in dist folder"
     git push origin gh-pages
 That's it.
+
+# Running project
+Just type **gulp** in root folder. It will starts BrowserSync and other gulp plugins.
+
+    gulp
