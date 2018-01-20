@@ -20,6 +20,7 @@ Now we'll create **gh-pages** branch and will push files from **dist** folder to
     git add .
     git commit -m "Initial commit"
     git push origin gh-pages
+
 # Using
 After editing sources you should do commits when you are in "root" folder and in **master** branch.
 
