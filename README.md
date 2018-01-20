@@ -1,4 +1,4 @@
-# Decription
+# Description
 It's a starter template for a web-developer.  I'll try to do all the best for improve it :3
 
 # Installation
