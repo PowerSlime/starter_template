@@ -1,0 +1,21 @@
+include ./jade/mixins.jade
+
+doctype html
+html(lang="RU")
+	head
+		block title
+			title Mihaela Dreglea Художник
+
+		block head_meta
+			include ./jade/head_meta.jade
+
+		block head_custom_css
+			link(rel="stylesheet", href="./css/main.min.css")
+
+
+
+	body
+		h1 Hi there!
+
+		include ./jade/scripts.jade
+		include ./jade/ie_fix.jade
