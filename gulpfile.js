@@ -107,3 +107,4 @@ gulp.task('watch', ['browser-sync'], () => {
 })
 
 gulp.task('default', ['watch']);
+gulp.task('build', ['sass', 'jade', 'move_html_to_dist', 'move_js_to_dist', 'imagemin'])
