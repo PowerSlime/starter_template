@@ -1,3 +1,4 @@
+
 # Description
 It's a starter template for a web-developer.  I'll try to do all the best for improve it :3
 
@@ -10,6 +11,8 @@ git remote set-url origin https://github.com/username/your_repo.git
 npm install
 git push origin master
 ```
+If you have some problems with `npm install` try to install `gulp` globally `npm install -g gulp`
+
 Now we'll create **gh-pages** branch and will push files from **dist** folder to the branch
 ```Bash
 mkdir dist
@@ -40,8 +43,24 @@ git push origin gh-pages
 ```
 That's it.
 
+# First run
+To start project properly you must have `index.html` inside your `dist` folder. There is a simple command that will build all your sources and paste them into `dist` folder.
+```Bash
+gulp build
+```
+or
+```Bash
+npm run gulp build
+```
+After that you can simply run gulp. (Take a look at the section bellow)
+
 # Running the project
 Just type **gulp** in root folder. It will starts BrowserSync and other gulp plugins.
 ```Bash
 gulp
 ```
+or
+```Bash
+npm run gulp
+```
+if you don't have gulp, installed globally.
