@@ -43,17 +43,6 @@ git push origin gh-pages
 ```
 That's it.
 
-# First run
-To start project properly you must have `index.html` inside your `dist` folder. There is a simple command that will build all your sources and paste them into `dist` folder.
-```Bash
-gulp build
-```
-or
-```Bash
-npm run gulp build
-```
-After that you can simply run gulp. (Take a look at the section bellow)
-
 # Running the project
 Just type **gulp** in root folder. It will starts BrowserSync and other gulp plugins.
 ```Bash
