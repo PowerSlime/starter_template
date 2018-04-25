@@ -13,7 +13,8 @@ const gulp = require('gulp'),
 
 config = {
 	dist_dir: 'dist',
-	src_dir: 'src'
+	src_dir: 'src',
+	run_on_start: ['sass', 'jade', 'move_html_to_dist', 'move_js_to_dist', 'imagemin']
 }
 
 
@@ -98,7 +99,7 @@ gulp.task('imagemin', () => {
 })
 
 
-gulp.task('watch', ['browser-sync'], () => {
+gulp.task('watch', config.run_on_start.concat(['browser-sync']), () => {
 	gulp.watch(patterns.sass, ['sass']);
 	gulp.watch(patterns.jade, ['jade']);
 	gulp.watch(patterns.html, ['move_html_to_dist']);
@@ -107,4 +108,4 @@ gulp.task('watch', ['browser-sync'], () => {
 })
 
 gulp.task('default', ['watch']);
-gulp.task('build', ['sass', 'jade', 'move_html_to_dist', 'move_js_to_dist', 'imagemin'])
+gulp.task('build', config.run_on_start)
