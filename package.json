@@ -1,16 +1,17 @@
 {
   "name": "starter_template",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "It's a starter template for a web-developer.  I'll try to do all the best for improve it :3",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "browser-sync": "browser-sync"
   },
   "author": "PowerSlime",
   "license": "MIT",
   "dependencies": {
-    "browser-sync": "^2.23.5",
+    "browser-sync": "^2.23.7",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.1.0",
     "gulp-imagemin": "^4.1.0",
