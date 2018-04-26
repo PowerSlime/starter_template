@@ -106,6 +106,7 @@ gulp.task('watch', config.run_on_start.concat(['browser-sync']), () => {
 	gulp.watch(patterns.dist, ['sync']);
 	gulp.watch(patterns.sass, ['sass']);
 	gulp.watch(patterns.jade, ['jade']);
+	gulp.watch(patterns.jade_files, ['jade'], null)
 	gulp.watch(patterns.html, ['move_html_to_dist']);
 	gulp.watch(patterns.js, ['move_js_to_dist']);
 	gulp.watch(patterns.img, ['imagemin']);
