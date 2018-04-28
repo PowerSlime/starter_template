@@ -1,16 +1,16 @@
-meta(charset="utf-8")
+include ./mixins/bootstrap.jade
 
+
+meta(charset="utf-8")
 meta(name="description", content="")
 
 meta(http-equiv="X-UA-Compatible", content="IE=edge")
 meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
 
-//- meta(property="og:image", content="/img/game-image.jpg")
-
 link(rel="shortcut icon", href="./favicon.ico", type="image/x-icon")
 
 //- Bootstrap
-link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css", integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy", crossorigin="anonymous")
++bootstrap_css()
 
 //- The font
 link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:400,900&amp;subset=cyrillic")
