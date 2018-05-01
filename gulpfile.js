@@ -4,9 +4,9 @@ const gulp = require('gulp'),
 	browserSync = require('browser-sync').create(),
 	imagemin = require('gulp-imagemin')
 	imageminJpegRecompress = require('imagemin-jpeg-recompress'),
-	jade = require('gulp-jade'),
 	minifyCss = require('gulp-minify-css'),
 	notify = require('gulp-notify'),
+	pug = require('gulp-pug'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass');
 
@@ -14,7 +14,7 @@ const gulp = require('gulp'),
 config = {
 	dist_dir: 'dist',
 	src_dir: 'src',
-	run_on_start: ['sass', 'jade', 'move_html_to_dist', 'move_js_to_dist', 'imagemin']
+	run_on_start: ['sass', 'pug', 'move_html_to_dist', 'move_js_to_dist', 'imagemin']
 }
 
 
@@ -25,8 +25,8 @@ config.images_src = `${config.src_dir}/img`;
 patterns = {
 	dist: `${config.dist_dir}/**/*`,
 	sass: `${config.src_dir}/**/*.{sass,scss}`,
-	jade: `${config.src_dir}/*.jade`,
-	jade_files: `${config.src_dir}/**/*.jade`,
+	pug: `${config.src_dir}/*.{jade,pug}`,
+	pug_files: `${config.src_dir}/**/*.{jade,pug}`,
 	html: `${config.src_dir}/*.html`,
 	js: `${config.src_dir}/**/*.js`,
 	img: `${config.images_src}/**/*`
@@ -57,11 +57,11 @@ gulp.task('sass', () => {
 })
 
 
-gulp.task('jade', () => {
-	return gulp.src(patterns.jade)
-		.pipe(jade({
-			pretty: true
-		}).on("error", notify.onError()))
+gulp.task('pug', () => {
+	return gulp.src(patterns.pug)
+		.pipe(pug({
+			pretty: '\t'
+		}).on('error', notify.onError()))
 		.pipe(gulp.dest(`${config.dist_dir}`))
 })
 
@@ -105,8 +105,8 @@ gulp.task('sync', () => {
 gulp.task('watch', config.run_on_start.concat(['browser-sync']), () => {
 	gulp.watch(patterns.dist, ['sync']);
 	gulp.watch(patterns.sass, ['sass']);
-	gulp.watch(patterns.jade, ['jade']);
-	gulp.watch(patterns.jade_files, ['jade'], null)
+	gulp.watch(patterns.pug, ['pug']);
+	gulp.watch(patterns.pug_files, ['pug'], null)
 	gulp.watch(patterns.html, ['move_html_to_dist']);
 	gulp.watch(patterns.js, ['move_js_to_dist']);
 	gulp.watch(patterns.img, ['imagemin']);

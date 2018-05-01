@@ -1,4 +1,4 @@
-include ./jade/mixins.jade
+include ./pug/mixins
 
 doctype html
 html(lang="EN")
@@ -7,7 +7,7 @@ html(lang="EN")
 			title Starter Template
 
 		block head_meta
-			include ./jade/head_meta.jade
+			include ./pug/head_meta
 
 		block head_custom_css
 			link(rel="stylesheet", href="./css/main.min.css")
@@ -17,5 +17,5 @@ html(lang="EN")
 	body
 		+typography()
 
-		include ./jade/scripts.jade
-		include ./jade/ie_fix.jade
+		include ./pug/scripts
+		include ./pug/ie_fix
