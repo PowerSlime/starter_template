@@ -1,10 +1,9 @@
 const gulp = require('gulp'),
-	autoprefixer = require('gulp-autoprefixer'),
 	bourbon = require('node-bourbon'),
 	browserSync = require('browser-sync').create(),
+	cleanCss = require('gulp-clean-css'),
 	imagemin = require('gulp-imagemin')
 	imageminJpegRecompress = require('imagemin-jpeg-recompress'),
-	minifyCss = require('gulp-minify-css'),
 	notify = require('gulp-notify'),
 	pug = require('gulp-pug'),
 	rename = require('gulp-rename'),
@@ -50,8 +49,10 @@ gulp.task('sass', () => {
 			outputStyle: 'compressed',
 			includePaths: bourbon.includePaths
 		}).on("error", notify.onError()))
-		.pipe(minifyCss())
-		.pipe(autoprefixer({browsers: ['last 5 versions']}))
+		.pipe(cleanCss({
+			compatibility: 'ie8',
+			level: 2
+		}))
 		.pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest(`${config.dist_dir}`))
 })
