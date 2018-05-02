@@ -3,15 +3,22 @@
 It's a starter template for a web-developer.  I'll try to do all the best for improve it :3
 
 # Installation
+I recommend to use `Yarn` for installing dependecies, because installing of dependecies is a bit faster than with `npm` (For example, for me `npm install` took about 42 seconds, with `yarn` - about 21 seconds). You can install it globally with following command:
+```Bash
+npm i yarn -g
+```
+
 Don't forget to change **username** and **your_repo** to your own.
 ```Bash
 git clone https://github.com/PowerSlime/starter_template.git
 cd starter_template
 git remote set-url origin https://github.com/username/your_repo.git
-npm install
+yarn install
 git push origin master
 ```
-If you have some problems with `npm install` try to install `gulp` globally `npm install -g gulp`
+
+If you don't have `yarn`, use `npm install` instead of `yarn install`
+If you have some problems with `npm install` (or `yarn install`) try to install `gulp` globally `npm install -g gulp`, or `yarn global add gulp`
 
 Now we'll create **gh-pages** branch and will push files from **dist** folder to the branch
 ```Bash
