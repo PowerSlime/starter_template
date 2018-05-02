@@ -1,4 +1,5 @@
 
+
 # Description
 It's a starter template for a web-developer.  I'll try to do all the best for improve it :3
 
@@ -18,6 +19,7 @@ git push origin master
 ```
 
 If you don't have `yarn`, use `npm install` instead of `yarn install`
+
 If you have some problems with `npm install` (or `yarn install`) try to install `gulp` globally `npm install -g gulp`, or `yarn global add gulp`
 
 Now we'll create **gh-pages** branch and will push files from **dist** folder to the branch
