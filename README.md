@@ -1,5 +1,6 @@
 
 
+
 # Description
 It's a starter template for a web-developer.  I'll try to do all the best for improve it :3
 
@@ -10,10 +11,15 @@ npm i yarn -g
 ```
 
 Don't forget to change **username** and **your_repo** to your own.
+*You have to clean default .git folder to clean all commits from this repo.*
 ```Bash
 git clone https://github.com/PowerSlime/starter_template.git
 cd starter_template
-git remote set-url origin https://github.com/username/your_repo.git
+rmdir /S /Q .git
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/username/your_repo.git
 yarn install
 git push origin master
 ```
