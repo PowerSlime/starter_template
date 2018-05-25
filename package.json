@@ -10,7 +10,8 @@
   },
   "author": "PowerSlime",
   "license": "MIT",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "browser-sync": "^2.23.7",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.9.3",
@@ -18,11 +19,9 @@
     "gulp-notify": "^2.2.0",
     "gulp-pug": "^4.0.1",
     "gulp-rename": "^1.2.2",
+    "gulp-sass": "^4.0.1",
     "imagemin-jpeg-recompress": "^5.1.0",
     "node-bourbon": "^4.2.8"
-  },
-  "devDependencies": {
-    "gulp-sass": "^4.0.1"
   },
   "repository": {
     "type": "git",
