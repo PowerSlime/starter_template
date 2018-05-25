@@ -18,11 +18,12 @@
     "gulp-notify": "^2.2.0",
     "gulp-pug": "^4.0.1",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.2.1",
     "imagemin-jpeg-recompress": "^5.1.0",
     "node-bourbon": "^4.2.8"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp-sass": "^4.0.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PowerSlime/starter_template.git"
