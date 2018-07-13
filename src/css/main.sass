@@ -1,43 +1,10 @@
-@import "_functions"
-@import "_var"
+@import "./components/functions"
+@import "./components/var"
 
-*::-webkit-input-placeholder
-	color: #666
-	opacity: 1
-
-*:-moz-placeholder
-	color: #666
-	opacity: 1
-
-*::-moz-placeholder
-	color: #666
-	opacity: 1
-
-*:-ms-input-placeholder
-	color: #666
-	opacity: 1
-
-body input:focus:required:invalid,
-body textarea:focus:required:invalid
-	color: #666
-body input:required:valid,
-body textarea:required:valid
-	color: #666
-
-body
-	color: #333
-	font-family: $font-base
-	font-size: $font-size-base
-	line-height: em(24px, $font-size-base)
-	min-width: 320px
-	overflow-x: hidden
-	position: relative
-
-.hidden
-	display: none
+@import "./components/head"
 
 // Custom styles here
 
 
 //ALWAYS END
-@import "_media.sass"
+@import "./components/media.sass"
