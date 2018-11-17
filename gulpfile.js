@@ -102,8 +102,7 @@ gulp.task('css', () => {
         .pipe(autoprefixer())
         .pipe(cleanCss({
             compatibility: 'ie10',
-            level: 2,
-            rebaseTo: config.path.dist
+            level: 2
         }))
         .pipe(rename({suffix: '.min'}))
         .pipe(gulpIf(config.isDevelopment, sourcemaps.write(".")))
