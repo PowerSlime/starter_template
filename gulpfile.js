@@ -1,5 +1,6 @@
 const gulp = require('gulp'),
     argv = require('yargs').argv,
+    autoprefixer = require('gulp-autoprefixer'),
     browserSync = require('browser-sync').create(),
     cleanCss = require('gulp-clean-css'),
     del = require('del'),
@@ -10,9 +11,9 @@ const gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     pug = require('gulp-pug'),
     rename = require('gulp-rename'),
+    sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
-    svgSprite = require('gulp-svg-sprite'),
-    sass = require('gulp-sass');
+    svgSprite = require('gulp-svg-sprite');
 
 
 // Configs
@@ -98,8 +99,9 @@ gulp.task('css', () => {
                 './node_modules/'
             ]
         }))
+        .pipe(autoprefixer())
         .pipe(cleanCss({
-            compatibility: 'ie8',
+            compatibility: 'ie10',
             level: 2,
             rebaseTo: config.path.dist
         }))
