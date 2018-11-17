@@ -6,6 +6,7 @@
   "scripts": {
     "start": "gulp",
     "build": "gulp build -N",
+    "lint-html": "htmlhint docs/**/*.html",
     "browser-sync": "browser-sync docs --watch --no-open --cors"
   },
   "author": "PowerSlime",
@@ -26,6 +27,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-svg-sprite": "^1.5.0",
+    "htmlhint": "^0.10.1",
     "imagemin-jpeg-recompress": "^5.1.0",
     "yargs": "^12.0.4"
   },
