@@ -1,6 +1,5 @@
 const gulp = require('gulp'),
     argv = require('yargs').argv,
-    bourbon = require('node-bourbon'),
     browserSync = require('browser-sync').create(),
     cleanCss = require('gulp-clean-css'),
     del = require('del'),
@@ -65,14 +64,14 @@ const paths = {
 gulp.task('browser-sync', () => {
     browserSync.init({
         server: {
-            baseDir: config.path.dist,
-            middleware: function (req, res, next) {
-                res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-                res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-                res.setHeader("Access-Control-Allow-Origin", "*");
-                next();
-            },
+            baseDir: config.path.dist
         },
+
+        // Add HTTP access control (CORS) headers to assets served by Browsersync
+        cors: true,
+
+        // Disable opening url in browser
+        open: false,
 
         // Disable browser-sync's notification on page
         // As "Connected to BrowserSync", "Injected main.min.css", etc...
@@ -97,7 +96,6 @@ gulp.task('css', () => {
             outputStyle: 'compressed',
             includePaths: [
                 './node_modules/'
-                // bourbon.includePaths
             ]
         }))
         .pipe(cleanCss({
@@ -139,7 +137,7 @@ gulp.task('imagemin', () => {
                 loops: 5,
                 min: 65,
                 max: 70,
-                quality:'medium'
+                quality: 'medium'
             }),
             imagemin.svgo(),
             imagemin.optipng({optimizationLevel: 3})

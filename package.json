@@ -1,32 +1,32 @@
 {
   "name": "starter_template",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "It's a starter template for a web-developer.  I'll try to do all the best for improve it :3",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "gulp",
-    "browser-sync": "browser-sync"
+    "start": "gulp",
+    "build": "gulp build -N",
+    "browser-sync": "browser-sync docs --watch --no-open --cors"
   },
   "author": "PowerSlime",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "browser-sync": "^2.24.4",
+    "browser-sync": "^2.26.3",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
-    "gulp-clean-css": "^3.9.4",
+    "gulp-clean-css": "^3.10.0",
     "gulp-if": "^2.0.2",
-    "gulp-imagemin": "^4.1.0",
+    "gulp-imagemin": "^5.0.3",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.0",
     "gulp-pug": "^4.0.1",
-    "gulp-rename": "^1.2.3",
-    "gulp-sass": "^4.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
+    "gulp-svg-sprite": "^1.5.0",
     "imagemin-jpeg-recompress": "^5.1.0",
-    "node-bourbon": "^4.2.8",
-    "yargs": "^12.0.1"
+    "yargs": "^12.0.4"
   },
   "repository": {
     "type": "git",

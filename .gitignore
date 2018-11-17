@@ -1,3 +1,6 @@
+# Remove sourcemaps
+*.map
+
 # Logs
 logs
 *.log
