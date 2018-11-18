@@ -1,0 +1,24 @@
+$fonts: (
+    // File name without extension
+    // Useful commands:
+    //     ls -1X
+    //     ls | grep '.ttf$' | sed 's/.ttf$//'
+    //
+    // example
+    // "Roboto-Regular",
+    // "Roboto-Bold",
+    //
+    // Don't forget about comma
+);
+
+@each $font in $fonts {
+    @font-face {
+        font-family: $font;
+        src: url("../../fonts/" + $font + ".ttf") format('truetype');
+        src: url("../../fonts/" + $font + ".eot");
+        src: url("../../fonts/" + $font + ".eot?#iefix") format('embedded-opentype');
+        src: url("../../fonts/" + $font + ".woff") format('woff');
+        //src: url("../../fonts/" + $font + ".woff2") format('woff2');
+        //src: url("../../fonts/" + $font + ".otf") format("opentype");
+    }
+}

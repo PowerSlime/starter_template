@@ -15,12 +15,15 @@ const gulp = require('gulp'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
+    ttf2eot = require('gulp-ttf2eot'),
+    ttf2woff = require('gulp-ttf2woff'),
+    ttf2woff2 = require('gulp-ttf2woff2'),
     svgSprite = require('gulp-svg-sprite');
 
 
 // Configs
 const config = {
-    runOnBuild: ['pug', 'nunjucks', 'css', 'js', 'imagemin', 'svg-sprite', 'fonts'],
+    runOnBuild: ['pug', 'nunjucks', 'css', 'js', 'imagemin', 'svg-sprite', 'ttf-move', 'ttf2woff', 'ttf2eot'],
     path: {
         source: 'src',
         dist: 'docs'  // "Docs" because it's supports by GitHub Pages
@@ -40,7 +43,7 @@ const paths = {
     // which are in "build" path
     build: {
         css: `${config.path.source}/css/*.{sass,scss}`,
-        fonts: `${config.path.source}/fonts/**/*`,
+        fonts: `${config.path.source}/fonts/*.ttf`,
         img: `${config.path.source}/img/**/*`,
         js: `${config.path.source}/js/*`,
         nunjucks: `${config.path.source}/*.{njk,html}`, // For enabling IDE support look https://github.com/mozilla/nunjucks/issues/472#issuecomment-123219907
@@ -50,7 +53,7 @@ const paths = {
 
     watch: {
         css: `${config.path.source}/**/*.{sass,scss}`,
-        fonts: `${config.path.source}/fonts/**/*`,
+        fonts: `${config.path.source}/fonts/*.ttf`,
         img: `${config.path.source}/img/**/*`,
         js: `${config.path.source}/**/*.js`,
         nunjucks: `${config.path.source}/**/*.{njk,html}`,
@@ -177,15 +180,39 @@ gulp.task('svg-sprite', () => {
 });
 
 
-gulp.task('fonts', () => {
-    return gulp.src(paths.build.fonts, {base: config.path.source})
+gulp.task('ttf-move', () => {
+    return gulp.src(paths.build.fonts, {base: config.path.source, since: gulp.lastRun('ttf-move')})
         .pipe(gulp.dest(config.path.dist));
 });
+
+
+gulp.task('ttf2woff', () => {
+    return gulp.src(paths.build.fonts, {base: config.path.source})
+        .pipe(ttf2woff())
+        .pipe(gulp.dest(config.path.dist));
+});
+
+
+gulp.task('ttf2woff2', () => {
+    // Took a lot of time, run it manually if you need it
+    // check http://socialcompare.com/en/comparison/browser-fonts-support-comparison
+    return gulp.src(paths.build.fonts, {base: config.path.source})
+        .pipe(ttf2woff2())
+        .pipe(gulp.dest(config.path.dist));
+});
+
+
+gulp.task('ttf2eot', () => {
+    return gulp.src(paths.build.fonts, {base: config.path.source})
+        .pipe(ttf2eot())
+        .pipe(gulp.dest(config.path.dist));
+});
+
 
 // Watchers
 gulp.task('watch', () => {
     gulp.watch(paths.watch.css, gulp.series('css'));
-    gulp.watch(paths.watch.fonts, gulp.series('fonts'));
+    gulp.watch(paths.watch.fonts, gulp.parallel(['ttf-move', 'ttf2woff', 'ttf2eot']));
     gulp.watch(paths.watch.img, gulp.series('imagemin'));
     gulp.watch(paths.watch.js, gulp.series('js'));
     gulp.watch(paths.watch.nunjucks, gulp.series('nunjucks'));
@@ -196,4 +223,6 @@ gulp.task('watch', () => {
 
 // CLI tasks
 gulp.task('build', gulp.series('clean', gulp.parallel(...config.runOnBuild)));
+gulp.task('fonts:fast', gulp.parallel(['ttf-move', 'ttf2woff', 'ttf2eot']));
+gulp.task('fonts:all', gulp.parallel(['ttf-move', 'ttf2woff', 'ttf2woff2', 'ttf2eot']));
 gulp.task('default', config.isDevelopment ? gulp.series('build', gulp.parallel('watch', 'browser-sync')) : gulp.series('build'));
