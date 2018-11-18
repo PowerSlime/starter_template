@@ -5,9 +5,11 @@ const gulp = require('gulp'),
     cleanCss = require('gulp-clean-css'),
     del = require('del'),
     gulpIf = require('gulp-if'),
+    htmlmin = require('gulp-htmlmin'),
     imagemin = require('gulp-imagemin'),
     imageminJpegRecompress = require('imagemin-jpeg-recompress'),
     notify = require('gulp-notify'),
+    nunjucks = require('gulp-nunjucks'),
     plumber = require('gulp-plumber'),
     pug = require('gulp-pug'),
     rename = require('gulp-rename'),
@@ -18,7 +20,7 @@ const gulp = require('gulp'),
 
 // Configs
 const config = {
-    runOnBuild: ['pug', 'css', 'js', 'imagemin', 'svg-sprite', 'fonts'],
+    runOnBuild: ['pug', 'nunjucks', 'css', 'js', 'imagemin', 'svg-sprite', 'fonts'],
     path: {
         source: 'src',
         dist: 'docs'  // "Docs" because it's supports by GitHub Pages
@@ -39,19 +41,21 @@ const paths = {
     build: {
         css: `${config.path.source}/css/*.{sass,scss}`,
         fonts: `${config.path.source}/fonts/**/*`,
-        pug: `${config.path.source}/*.{jade,pug}`,
         img: `${config.path.source}/img/**/*`,
         js: `${config.path.source}/js/*`,
+        nunjucks: `${config.path.source}/*.{njk,html}`, // For enabling IDE support look https://github.com/mozilla/nunjucks/issues/472#issuecomment-123219907
+        pug: `${config.path.source}/*.{jade,pug}`,
         svg: `${config.path.source}/svg/*.svg`,
     },
 
     watch: {
         css: `${config.path.source}/**/*.{sass,scss}`,
         fonts: `${config.path.source}/fonts/**/*`,
-        pug: `${config.path.source}/**/*.{jade,pug}`,
         img: `${config.path.source}/img/**/*`,
         js: `${config.path.source}/**/*.js`,
-        svg: `${config.path.source}/svg/*.svg`
+        nunjucks: `${config.path.source}/**/*.{njk,html}`,
+        pug: `${config.path.source}/**/*.{jade,pug}`,
+        svg: `${config.path.source}/svg/*.svg`,
     },
 
     // Part for browser-sync plugin
@@ -107,6 +111,17 @@ gulp.task('css', () => {
         .pipe(rename({suffix: '.min'}))
         .pipe(gulpIf(config.isDevelopment, sourcemaps.write(".")))
         .pipe(gulp.dest(config.path.dist));
+});
+
+
+gulp.task('nunjucks', () => {
+    return gulp.src(paths.build.nunjucks, {base: config.path.source})
+        .pipe(nunjucks.compile()) // docs https://mozilla.github.io/nunjucks/
+        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(rename({
+            extname: '.html'
+        }))
+        .pipe(gulp.dest(config.path.dist))
 });
 
 
@@ -170,11 +185,12 @@ gulp.task('fonts', () => {
 // Watchers
 gulp.task('watch', () => {
     gulp.watch(paths.watch.css, gulp.series('css'));
-    gulp.watch(paths.watch.pug, gulp.series('pug'));
-    gulp.watch(paths.watch.js, gulp.series('js'));
-    gulp.watch(paths.watch.img, gulp.series('imagemin'));
-    gulp.watch(paths.watch.svg, gulp.series('svg-sprite'));
     gulp.watch(paths.watch.fonts, gulp.series('fonts'));
+    gulp.watch(paths.watch.img, gulp.series('imagemin'));
+    gulp.watch(paths.watch.js, gulp.series('js'));
+    gulp.watch(paths.watch.nunjucks, gulp.series('nunjucks'));
+    gulp.watch(paths.watch.pug, gulp.series('pug'));
+    gulp.watch(paths.watch.svg, gulp.series('svg-sprite'));
 });
 
 
