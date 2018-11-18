@@ -18,7 +18,7 @@ const gulp = require('gulp'),
 
 // Configs
 const config = {
-    runOnBuild: ['html', 'css', 'js', 'imagemin', 'svg-sprite', 'fonts'],
+    runOnBuild: ['pug', 'css', 'js', 'imagemin', 'svg-sprite', 'fonts'],
     path: {
         source: 'src',
         dist: 'docs'  // "Docs" because it's supports by GitHub Pages
@@ -39,7 +39,7 @@ const paths = {
     build: {
         css: `${config.path.source}/css/*.{sass,scss}`,
         fonts: `${config.path.source}/fonts/**/*`,
-        html: `${config.path.source}/*.{jade,pug}`,
+        pug: `${config.path.source}/*.{jade,pug}`,
         img: `${config.path.source}/img/**/*`,
         js: `${config.path.source}/js/*`,
         svg: `${config.path.source}/svg/*.svg`,
@@ -48,7 +48,7 @@ const paths = {
     watch: {
         css: `${config.path.source}/**/*.{sass,scss}`,
         fonts: `${config.path.source}/fonts/**/*`,
-        html: `${config.path.source}/**/*.{jade,pug}`,
+        pug: `${config.path.source}/**/*.{jade,pug}`,
         img: `${config.path.source}/img/**/*`,
         js: `${config.path.source}/**/*.js`,
         svg: `${config.path.source}/svg/*.svg`
@@ -110,8 +110,8 @@ gulp.task('css', () => {
 });
 
 
-gulp.task('html', () => {
-    return gulp.src(paths.build.html, {base: config.path.source})
+gulp.task('pug', () => {
+    return gulp.src(paths.build.pug, {base: config.path.source})
         .pipe(plumber(config.plumber))
         .pipe(pug({
             pretty: false
@@ -170,7 +170,7 @@ gulp.task('fonts', () => {
 // Watchers
 gulp.task('watch', () => {
     gulp.watch(paths.watch.css, gulp.series('css'));
-    gulp.watch(paths.watch.html, gulp.series('html'));
+    gulp.watch(paths.watch.pug, gulp.series('pug'));
     gulp.watch(paths.watch.js, gulp.series('js'));
     gulp.watch(paths.watch.img, gulp.series('imagemin'));
     gulp.watch(paths.watch.svg, gulp.series('svg-sprite'));
