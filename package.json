@@ -1,6 +1,6 @@
 {
   "name": "starter_template",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "description": "It's a starter template for a web-developer.  I'll try to do all the best for improve it :3",
   "main": "gulpfile.js",
   "scripts": {
