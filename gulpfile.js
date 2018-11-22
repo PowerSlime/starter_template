@@ -23,7 +23,19 @@ const gulp = require('gulp'),
 
 // Configs
 const config = {
-    runOnBuild: ['pug', 'nunjucks', 'css', 'js', 'imagemin', 'svg-sprite', 'ttf-move', 'ttf2woff', 'ttf2eot'],
+    runOnBuild: [
+        'pug',
+        'nunjucks',
+        'css',
+        'js',
+        'imagemin',
+        'svg-sprite',
+        'ttf-move',
+        'ttf2woff',
+        'ttf2eot',
+        'json',
+        'xml',
+    ],
     path: {
         source: 'src',
         dist: 'docs'  // "Docs" because it's supports by GitHub Pages
@@ -49,6 +61,8 @@ const paths = {
         nunjucks: `${config.path.source}/*.{njk,html}`, // For enabling IDE support look https://github.com/mozilla/nunjucks/issues/472#issuecomment-123219907
         pug: `${config.path.source}/*.{jade,pug}`,
         svg: `${config.path.source}/svg/*.svg`,
+        json: `${config.path.source}/**/*.json`,
+        xml: `${config.path.source}/**/*.xml`,
     },
 
     watch: {
@@ -59,6 +73,8 @@ const paths = {
         nunjucks: `${config.path.source}/**/*.{njk,html}`,
         pug: `${config.path.source}/**/*.{jade,pug}`,
         svg: `${config.path.source}/svg/*.svg`,
+        json: `${config.path.source}/**/*.json`,
+        xml: `${config.path.source}/**/*.xml`,
     },
 
     // Part for browser-sync plugin
@@ -181,7 +197,7 @@ gulp.task('svg-sprite', () => {
 
 
 gulp.task('ttf-move', () => {
-    return gulp.src(paths.build.fonts, {base: config.path.source, since: gulp.lastRun('ttf-move')})
+    return gulp.src(paths.build.fonts, {base: config.path.source})
         .pipe(gulp.dest(config.path.dist));
 });
 
@@ -209,6 +225,18 @@ gulp.task('ttf2eot', () => {
 });
 
 
+gulp.task('json', () => {
+    return gulp.src(paths.build.json, {base: config.path.source})
+        .pipe(gulp.dest(config.path.dist));
+});
+
+
+gulp.task('xml', () => {
+    return gulp.src(paths.build.xml, {base: config.path.source})
+        .pipe(gulp.dest(config.path.dist));
+});
+
+
 // Watchers
 gulp.task('watch', () => {
     gulp.watch(paths.watch.css, gulp.series('css'));
@@ -218,6 +246,8 @@ gulp.task('watch', () => {
     gulp.watch(paths.watch.nunjucks, gulp.series('nunjucks'));
     gulp.watch(paths.watch.pug, gulp.series('pug'));
     gulp.watch(paths.watch.svg, gulp.series('svg-sprite'));
+    gulp.watch(paths.watch.json, gulp.series('json'));
+    gulp.watch(paths.watch.xml, gulp.series('xml'));
 });
 
 
