@@ -4,11 +4,11 @@ $fonts: (
     //     ls -1X
     //     ls | grep '.ttf$' | sed 's/.ttf$//'
     //
-    // example
-    // "Roboto-Regular",
-    // "Roboto-Bold",
     //
-    // Don't forget about comma
+    // example:
+    //
+    // Roboto-Regular
+    // Roboto-Bold
 );
 
 @each $font in $fonts {
@@ -20,5 +20,8 @@ $fonts: (
         src: url("../../fonts/" + $font + ".woff") format('woff');
         //src: url("../../fonts/" + $font + ".woff2") format('woff2');
         //src: url("../../fonts/" + $font + ".otf") format("opentype");
+
+        font-weight: normal;
+        font-style: normal;
     }
 }
