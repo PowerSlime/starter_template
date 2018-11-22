@@ -120,7 +120,7 @@ gulp.task('css', () => {
 gulp.task('nunjucks', () => {
     return gulp.src(paths.build.nunjucks, {base: config.path.source})
         .pipe(nunjucks.compile()) // docs https://mozilla.github.io/nunjucks/
-        .pipe(htmlmin({ collapseWhitespace: true }))
+        // .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(rename({
             extname: '.html'
         }))
@@ -132,7 +132,7 @@ gulp.task('pug', () => {
     return gulp.src(paths.build.pug, {base: config.path.source})
         .pipe(plumber(config.plumber))
         .pipe(pug({
-            pretty: false
+            pretty: true
         }))
         .pipe(gulp.dest(config.path.dist));
 });
