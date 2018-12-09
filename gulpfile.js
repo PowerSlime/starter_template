@@ -1,6 +1,8 @@
 const gulp = require('gulp'),
     argv = require('yargs').argv,
     autoprefixer = require('gulp-autoprefixer'),
+    babelify = require('babelify'),
+    bro = require('gulp-bro'),
     browserSync = require('browser-sync').create(),
     cleanCss = require('gulp-clean-css'),
     del = require('del'),
@@ -18,6 +20,7 @@ const gulp = require('gulp'),
     ttf2eot = require('gulp-ttf2eot'),
     ttf2woff = require('gulp-ttf2woff'),
     ttf2woff2 = require('gulp-ttf2woff2'),
+    uglifyify = require('uglifyify'),
     svgSprite = require('gulp-svg-sprite');
 
 
@@ -57,7 +60,7 @@ const paths = {
         css: `${config.path.source}/css/*.{sass,scss}`,
         fonts: `${config.path.source}/fonts/*.ttf`,
         img: `${config.path.source}/img/**/*`,
-        js: `${config.path.source}/js/*`,
+        js: `${config.path.source}/js/*.js`,
         nunjucks: `${config.path.source}/*.{njk,html}`, // For enabling IDE support look https://github.com/mozilla/nunjucks/issues/472#issuecomment-123219907
         pug: `${config.path.source}/*.{jade,pug}`,
         svg: `${config.path.source}/svg/*.svg`,
@@ -88,7 +91,10 @@ const paths = {
 gulp.task('browser-sync', () => {
     browserSync.init({
         server: {
-            baseDir: config.path.dist
+            baseDir: config.path.dist,
+            // Enable directory listening
+            // Shows all files in directory that we serve
+            directory: true
         },
 
         // Add HTTP access control (CORS) headers to assets served by Browsersync
@@ -157,7 +163,17 @@ gulp.task('pug', () => {
 gulp.task('js', () => {
     // In future (v4.0.0) there will be webpack handler
     // wait a bit for it
-    return gulp.src(paths.build.js, {base: config.path.source, since: gulp.lastRun('js')})
+    return gulp.src(paths.build.js, {base: config.path.source})
+        .pipe(plumber(config.plumber))
+        .pipe(gulpIf(config.isDevelopment, sourcemaps.init()))
+        .pipe(bro({
+            transform: [
+                babelify.configure({presets: ['env']}),
+                ['uglifyify', {global: true}]
+            ]
+        }))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulpIf(config.isDevelopment, sourcemaps.write(".")))
         .pipe(gulp.dest(config.path.dist));
 });
 
