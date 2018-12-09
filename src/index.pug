@@ -1,20 +1,9 @@
-include ./pug/mixins
+extends ./pug/base_template
+include ./pug/mixins/typography
 
-doctype html
-html(lang="EN")
-	head
-		block title
-			title Starter Template
+block title
+	title Starter Template
 
-		block head_meta
-			include ./pug/head_meta
-
-		block head_custom_css
-			link(rel="stylesheet", href="./css/main.min.css")
-
-
-	body
+block content
+	.container
 		+typography()
-
-		include ./pug/scripts
-		include ./pug/ie_fix

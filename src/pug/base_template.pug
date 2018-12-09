@@ -1,0 +1,23 @@
+doctype html
+html(lang="RU")
+    head
+        block title
+            title Starter Template
+
+        block head_meta
+            include ./head_meta
+
+        block head_custom_css
+            link(rel="stylesheet", href="./css/main.min.css")
+
+
+    body
+        section.content
+            block content
+
+        section.credits
+
+        include ./scripts
+        block custom_scripts
+
+        include ./ie_fix

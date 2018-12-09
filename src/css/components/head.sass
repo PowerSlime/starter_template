@@ -25,13 +25,20 @@ body textarea:required:valid
 	color: #666
 
 body
+	background: $background-color
 	color: #333
 	font-family: $font-base
 	font-size: $font-size-base
-	line-height: em(24px, $font-size-base)
+	line-height: normal
 	min-width: 320px
-	overflow-x: hidden
+	overflow-x: auto
 	position: relative
+	display: flex
+	flex-direction: column
+	min-height: 100vh
+
+a
+	outline: 0
 
 .hidden
 	display: none
