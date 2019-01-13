@@ -1,5 +1,5 @@
 @import "./functions"
-@import "./var"
+@import "vars"
 
 *::-webkit-input-placeholder
 	color: #666
@@ -36,6 +36,14 @@ body
 	display: flex
 	flex-direction: column
 	min-height: 100vh
+
+	// Be careful, not it disables system's font smoothing
+	// Bootstrap don't recommends to use it
+	//
+	// Disabled by default
+
+	//-webkit-font-smoothing: antialiased
+	//-moz-osx-font-smoothing: grayscale
 
 a
 	outline: 0

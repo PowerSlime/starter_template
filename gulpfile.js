@@ -6,13 +6,19 @@ const gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     cleanCss = require('gulp-clean-css'),
     del = require('del'),
+    fs = require('fs'),
     gulpIf = require('gulp-if'),
     htmlmin = require('gulp-htmlmin'),
     imagemin = require('gulp-imagemin'),
     imageminJpegRecompress = require('imagemin-jpeg-recompress'),
+    imageminPngquant = require('imagemin-pngquant'),
     notify = require('gulp-notify'),
     nunjucks = require('gulp-nunjucks'),
     plumber = require('gulp-plumber'),
+    postCss = require('gulp-postcss'),
+    postCssImport = require('postcss-import'),
+    postCssLost = require('lost'),
+    postCssShort = require('postcss-short'),
     pug = require('gulp-pug'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
@@ -38,6 +44,7 @@ const config = {
         'ttf2eot',
         'json',
         'xml',
+        'static_files'
     ],
     path: {
         source: 'src',
@@ -50,6 +57,44 @@ const config = {
     plumber: {
         errorHandler: console.error // notify.onError()
     }
+};
+
+config.browserify = {
+    // We're use inline sourcemaps, because when we are trying to exclude them
+    // from file to *.map one get a gigantic CPU usage on page reload in browser
+    //
+    // So... When we'll run build task with "-N" parameter the output will be clean.
+    debug: config.isDevelopment,
+    transform: [
+        babelify.configure({
+            presets: [
+                [
+                    '@babel/preset-env',
+                    {
+                        useBuiltIns: 'usage'
+                    }
+                ]
+            ]
+        }),
+        config.isDevelopment ? null : ['uglifyify', {global: true}]
+    ]
+};
+
+
+config.postCss = {
+    plugins: [
+        postCssImport({
+            addModulesDirectories: ["node_modules"]
+        }),
+        postCssLost({
+            flexbox: "flex",
+            rounder: 100
+        }),
+        postCssShort({
+            prefix: "x"
+        }),
+    ],
+    config: null
 };
 
 
@@ -66,6 +111,7 @@ const paths = {
         svg: `${config.path.source}/svg/*.svg`,
         json: `${config.path.source}/**/*.json`,
         xml: `${config.path.source}/**/*.xml`,
+        static_files: `${config.path.source}/static/**/*`,
     },
 
     watch: {
@@ -78,12 +124,38 @@ const paths = {
         svg: `${config.path.source}/svg/*.svg`,
         json: `${config.path.source}/**/*.json`,
         xml: `${config.path.source}/**/*.xml`,
+        static_files: `${config.path.source}/static/**/*`,
     },
 
     // Part for browser-sync plugin
     sync: {
         watch: `${config.path.dist}/**/*.*`,
     }
+};
+
+const getFilesInFolder = (folder = config.path.dist, fileExtension) => {
+    let result = fs.readdirSync(folder)
+        .filter(fileName => {
+            const statsObject = fs.statSync(`${folder}/${fileName}`);
+            return statsObject.isFile() === true;
+        });
+
+    if (fileExtension) {
+        const regex = new RegExp(`\.${fileExtension}$`);
+
+        result = result.filter(fileName => regex.test(fileName));
+    }
+
+    return result;
+};
+
+
+const changeFilesExtentions = (filenameList, findExtension, toExtension) => {
+    const regex = new RegExp(`(.*)\.${findExtension}$`);
+
+    return filenameList
+        .map(filename => filename.match(regex)[1])
+        .map(filename => `${filename}.${toExtension}`)
 };
 
 
@@ -97,6 +169,9 @@ gulp.task('browser-sync', () => {
             directory: true
         },
 
+        // Watch files for changes
+        watch: true,
+
         // Add HTTP access control (CORS) headers to assets served by Browsersync
         cors: true,
 
@@ -109,12 +184,12 @@ gulp.task('browser-sync', () => {
     });
 
     // BrowserSync's watcher
-    browserSync.watch(paths.sync.watch).on('change', browserSync.reload);
+    // browserSync.watch(paths.sync.watch).on('change', browserSync.reload);
 });
 
 
 gulp.task('clean', () => {
-    return del(config.path.dist);
+    return del(`${config.path.dist}/**/*`);
 });
 
 
@@ -123,18 +198,22 @@ gulp.task('css', () => {
         .pipe(plumber(config.plumber))
         .pipe(gulpIf(config.isDevelopment, sourcemaps.init()))
         .pipe(sass({
-            outputStyle: 'compressed',
-            includePaths: [
-                './node_modules/'
-            ]
+            outputStyle: 'compressed'
         }))
+        .pipe(postCss(config.postCss.plugins, config.postCss.config))
         .pipe(autoprefixer())
-        .pipe(cleanCss({
+        // Enable css minify only on production build
+        // Disabled in development mode to save CPU resources
+        .pipe(gulpIf(!config.isDevelopment, cleanCss({
             compatibility: 'ie10',
-            level: 2
-        }))
+            level: {
+                2: {
+                    all: true
+                }
+            }
+        })))
         .pipe(rename({suffix: '.min'}))
-        .pipe(gulpIf(config.isDevelopment, sourcemaps.write(".")))
+        .pipe(gulpIf(config.isDevelopment, sourcemaps.write(".", {includeContent: false, sourceRoot: "/src"})))
         .pipe(gulp.dest(config.path.dist));
 });
 
@@ -154,7 +233,13 @@ gulp.task('pug', () => {
     return gulp.src(paths.build.pug, {base: config.path.source})
         .pipe(plumber(config.plumber))
         .pipe(pug({
-            pretty: true
+            pretty: true,
+            cache: true,
+            locals: {
+                config,
+                getFilesInFolder,
+                changeFilesExtentions
+            }
         }))
         .pipe(gulp.dest(config.path.dist));
 });
@@ -165,21 +250,14 @@ gulp.task('js', () => {
     // wait a bit for it
     return gulp.src(paths.build.js, {base: config.path.source})
         .pipe(plumber(config.plumber))
-        .pipe(gulpIf(config.isDevelopment, sourcemaps.init()))
-        .pipe(bro({
-            transform: [
-                babelify.configure({presets: ['env']}),
-                ['uglifyify', {global: true}]
-            ]
-        }))
+        .pipe(bro(config.browserify))
         .pipe(rename({suffix: '.min'}))
-        .pipe(gulpIf(config.isDevelopment, sourcemaps.write(".")))
         .pipe(gulp.dest(config.path.dist));
 });
 
 
 gulp.task('imagemin', () => {
-    return gulp.src(paths.build.img, {base: config.path.source, since: gulp.lastRun('imagemin')})
+    return gulp.src(paths.build.img, {base: config.path.source})
         .pipe(plumber(config.plumber))
         .pipe(imagemin([
             imagemin.gifsicle({interlaced: true}),
@@ -191,7 +269,8 @@ gulp.task('imagemin', () => {
                 quality: 'medium'
             }),
             imagemin.svgo(),
-            imagemin.optipng({optimizationLevel: 3})
+            imagemin.optipng({optimizationLevel: 7}),
+            imageminPngquant({quality: [.65, .8]})
         ]))
         .pipe(gulp.dest(config.path.dist));
 });
@@ -253,6 +332,12 @@ gulp.task('xml', () => {
 });
 
 
+gulp.task('static_files', () => {
+    return gulp.src(paths.build.static_files, {base: config.path.source})
+        .pipe(gulp.dest(config.path.dist));
+});
+
+
 // Watchers
 gulp.task('watch', () => {
     gulp.watch(paths.watch.css, gulp.series('css'));
@@ -264,6 +349,7 @@ gulp.task('watch', () => {
     gulp.watch(paths.watch.svg, gulp.series('svg-sprite'));
     gulp.watch(paths.watch.json, gulp.series('json'));
     gulp.watch(paths.watch.xml, gulp.series('xml'));
+    gulp.watch(paths.watch.static_files, gulp.series('static_files'));
 });
 
 
@@ -272,3 +358,8 @@ gulp.task('build', gulp.series('clean', gulp.parallel(...config.runOnBuild)));
 gulp.task('fonts:fast', gulp.parallel(['ttf-move', 'ttf2woff', 'ttf2eot']));
 gulp.task('fonts:all', gulp.parallel(['ttf-move', 'ttf2woff', 'ttf2woff2', 'ttf2eot']));
 gulp.task('default', config.isDevelopment ? gulp.series('build', gulp.parallel('watch', 'browser-sync')) : gulp.series('build'));
+
+
+module.exports = {
+    config: config
+};

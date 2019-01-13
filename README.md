@@ -1,4 +1,4 @@
-# Description
+# Description 👀
 [![GitHub license](https://img.shields.io/github/license/PowerSlime/starter_template.svg)](https://github.com/PowerSlime/starter_template/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/PowerSlime/starter_template.svg)](https://github.com/PowerSlime/starter_template/issues)
 [![GitHub stars](https://img.shields.io/github/stars/PowerSlime/starter_template.svg)](https://github.com/PowerSlime/starter_template/stargazers)
@@ -7,7 +7,7 @@
 
 It's a starter template for a web-developer.  I'll try to do all the best for improve it :3
 
-## Installation
+## Installation 🛠
 Don't forget to change **username** and **your_repo** to your own.
 *You have to clean default .git folder to clean all commits from this repo.*
 ```Bash
@@ -22,18 +22,34 @@ npm i
 git push origin master
 ```
 
-### Running the project
+## Important
+Please, use git hooks, included in `git-hooks` folder, and in case that you change the dist folder in `gulpfile.js`
+make sure, that it changed in `git-hooks` files too.
+
+To start using git hooks just drop files from `git-hooks` to `.git/hooks/` (in project folder).
+**If you're using Linux** - don't forget to make them executable (`chmod +x .git/hooks/*`).
+
+### What do that crap do? 👀
+By default minimization is disabled to reduce CPU usage 🔥 in development mode, but when we're trying
+to push our updates to git it will run `npm run build`, generate the commit message
+and if all is OK - it will push the updates.
+
+All files will be minified and dist folder will be cleaned up.
+
+## Running the project 🚀
 Just type this command to start developing.
 ```Bash
 npm run start
 ```
 
-### Deployment
-If your template is ready to deploy you have to run build command.
+### Deployment 📦
+If your template is ready to deploy you have to run build command. It will minimize all the files and
+clean up the dist folder.
+
 ```Bash
 npm run build
 ```
 
-It will clean the dist folder and regenerate all the code.
+**In case that you have setup git hooks - don't need to run this command. Just do the push.** 
 
 # Thank you! 😉

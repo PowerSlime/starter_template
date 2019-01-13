@@ -1,0 +1,11 @@
+@mixin on-hover
+    @media not all and (pointer: coarse)
+        &:hover
+            @content
+
+    @media screen and (min-width: 1025px)
+        &:hover
+            @content
+
+    &:active
+        @content

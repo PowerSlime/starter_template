@@ -1,5 +1,5 @@
 @import "./functions"
-@import "./var"
+@import "vars"
 
 h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5
     line-height: 1.5em
@@ -8,37 +8,27 @@ h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5
 
 h1, .h1
     font-size: 30px
-    line-height: 52px/30px * 1em
+    line-height: (52/30)
 
 h2, .h2
     font-size: 26px
-    line-height: 45px/26px * 1em
+    line-height: (45/26)
 
 h3, .h3
     font-size: 24px
-    line-height: 41px/24px * 1em
+    line-height: (41/24)
 
 h4, .h4
     font-size: 22px
-    line-height: 38px/22px * 1em
+    line-height: (38/22)
 
 h5, .h5
     font-size: 20px
-    line-height: 34px/20px * 1em
+    line-height: (34/20)
 
 h6, .h6
     font-size: 18px
-    line-height: 31px/18px * 1em
+    line-height: (31/18)
 
 p
     margin: 0 0 5px
-
-ul, ol
-    margin-left: 0
-    padding-left: 18px
-
-strong, b
-    font-weight: normal
-
-em, i
-    //

@@ -1,6 +1,6 @@
 {
   "name": "starter_template",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "It's a starter template for a web-developer.  I'll try to do all the best for improve it :3",
   "main": "gulpfile.js",
   "scripts": {
@@ -12,15 +12,18 @@
   "author": "PowerSlime",
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "^4.2.1",
     "jquery": "^3.3.1",
     "normalize.css": "^8.0.1",
     "retinajs": "https://github.com/strues/retinajs",
     "svg4everybody": "^2.1.9"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "babelify": "^8.0.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.2.3",
+    "babelify": "^10.0.0",
     "browser-sync": "^2.26.3",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
@@ -33,6 +36,7 @@
     "gulp-notify": "^3.2.0",
     "gulp-nunjucks": "^4.0.0",
     "gulp-plumber": "^1.2.0",
+    "gulp-postcss": "^8.0.0",
     "gulp-pug": "^4.0.1",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
@@ -43,6 +47,10 @@
     "gulp-ttf2woff2": "^2.0.2",
     "htmlhint": "^0.10.1",
     "imagemin-jpeg-recompress": "^6.0.0",
+    "imagemin-pngquant": "^7.0.0",
+    "lost": "^8.3.0",
+    "postcss-import": "^12.0.1",
+    "postcss-short": "^5.0.0",
     "uglifyify": "^5.0.1",
     "yargs": "^12.0.5"
   },

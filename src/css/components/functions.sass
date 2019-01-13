@@ -1,3 +1,22 @@
+// Usage:
+//
+// $items: 4
+// $margin: 25px
+// $container-width: 1209px
+//
+// width: getWidth($items, $margin, $container-width)
+// margin-right: getMargin($margin, $container-width)
+
+@function getAvailableWidth($container-width, $margin, $items)
+	@return $container-width - ($margin * ($items - 1))
+
+@function getWidth($items, $margin, $container-width)
+	@return getAvailableWidth($container-width, $margin, $items) /$items * 100 / $container-width * 1%
+
+@function getMargin($margin, $container-width)
+	@return $margin/$container-width * 100%
+
+
+
 @function em($target, $context: 16)
 	@return #{$target/$context}em
-
