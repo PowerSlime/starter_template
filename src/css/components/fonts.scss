@@ -25,11 +25,6 @@ $fonts: (
     // ("Roboto", "Italic", 400, italic),
     // ("Roboto", "Bold", 700, normal),
     // ("Roboto", "BoldItalic", 700, Italic),
-
-     ("Roboto", "Regular", 400, normal),
-     ("Roboto", "Italic", 400, italic),
-     ("Roboto", "Bold", 700, normal),
-     ("Roboto", "BoldItalic", 700, Italic),
 );
 
 @mixin getFontLinks($font, $style) {
