@@ -8,4 +8,4 @@ npm run build -N;
 git add docs/;
 git commit -m "$build_pattern";
 
-exit 1;
+exit 0;
