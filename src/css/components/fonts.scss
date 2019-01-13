@@ -1,28 +1,61 @@
 $fonts: (
-    // File name without extension
     // Useful commands:
     //     ls -1X
     //     ls | grep '.ttf$' | sed 's/.ttf$//'
+
+    // Ref for fonts-weight
     //
+    // 100 Extra Light or Ultra Light
+    // 200 Light or Thin
+    // 300 Book or Demi
+    // 400 Normal or Regular
+    // 500 Medium
+    // 600 Semibold, Demibold
+    // 700 Bold
+    // 800 Black, Extra Bold or Heavy
+    // 900 Extra Black, Fat, Poster or Ultra Black
+    //
+    // ref https://www.webtype.com/info/articles/fonts-weights/
+
+    // (FontFamily, FontFamilyStyle, FontWeight, FontStyle)
     //
     // example:
     //
-    // Roboto-Regular
-    // Roboto-Bold
+    // ("Roboto", "Regular", 400, normal),
+    // ("Roboto", "Italic", 400, italic),
+    // ("Roboto", "Bold", 700, normal),
+    // ("Roboto", "BoldItalic", 700, Italic),
+
+     ("Roboto", "Regular", 400, normal),
+     ("Roboto", "Italic", 400, italic),
+     ("Roboto", "Bold", 700, normal),
+     ("Roboto", "BoldItalic", 700, Italic),
 );
+
+@mixin getFontLinks($font, $style) {
+    src:
+        url("../fonts/" + $font + "-" + $style + ".woff") format("woff"),
+        url("../fonts/" + $font + "-" + $style + ".eot"),
+        url("../fonts/" + $font + "-" + $style + ".eot#iefix") format('embedded-opentype'),
+        url("../fonts/" + $font + "-" + $style + ".ttf") format('truetype');
+}
+
+@mixin getFontStyles($font, $font-style, $weight: 400, $style: normal) {
+    font-family: $font;
+    @include getFontLinks($font, $font-style);
+
+    font-weight: $weight;
+    font-style: $style;
+    font-display: fallback;
+}
 
 @each $font in $fonts {
     @font-face {
-        font-family: $font;
-        src: url("../fonts/" + $font + ".ttf") format('truetype');
-        src: url("../fonts/" + $font + ".eot");
-        src: url("../fonts/" + $font + ".eot?#iefix") format('embedded-opentype');
-        src: url("../fonts/" + $font + ".woff") format('woff');
-        //src: url("../fonts/" + $font + ".woff2") format('woff2');
-        //src: url("../fonts/" + $font + ".otf") format("opentype");
+        $font-family: nth($font, 1);
+        $font-family-style: nth($font, 2);
+        $font-weight: nth($font, 3);
+        $font-style: nth($font, 4);
 
-        font-weight: normal;
-        font-style: normal;
-        font-display: fallback;
+        @include getFontStyles($font-family, $font-family-style, $font-weight, $font-style);
     }
 }
