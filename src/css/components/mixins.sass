@@ -9,3 +9,15 @@
 
     &:active
         @content
+
+@mixin is-mac
+    html.is-mac &
+        @content
+
+@mixin is-mac-without-firefox
+    html.is-mac:not(.firefox) &
+        @content
+
+@mixin is-mac-on-chrome
+    html.is-mac.chrome &
+        @content

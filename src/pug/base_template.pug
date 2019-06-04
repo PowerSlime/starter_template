@@ -1,8 +1,23 @@
 doctype html
+
+block variables-init
+    -
+        // use `opts` var to overwrite the options
+        var defaults = {
+            sitename: "Starter Template",
+            page: ""
+        };
+
+block variables
+    //- use `opts` var to overwrite the options
+
+block variables-calculated
+    - var options = Object.assign(defaults, opts)
+
 html(lang="RU")
     head
         block title
-            title Starter Template
+            title= `${options.sitename} ${options.page}`.trim()
 
         block head_meta
             include ./head_meta
@@ -19,5 +34,3 @@ html(lang="RU")
 
         include ./scripts
         block custom_scripts
-
-        include ./ie_fix

@@ -1,15 +1,16 @@
-// prevent babel from losing this
-// this should be window object
-function init() {
-    this.$ = require("jquery/dist/jquery");
-    this.jQuery = this.$;
+import "dom4";
 
-    require("svg4everybody/dist/svg4everybody")();
-    require("retinajs/dist/retina");
+import * as $ from "jquery/dist/jquery";
 
-    $(document).ready(function () {
+window.$ = $;
+window.jQuery = $;
 
-    });
-}
+import svgPolyfill from "svg4everybody/dist/svg4everybody";
+import isMac from "./components/is-mac";
+import "retinajs/dist/retina";
 
-init.bind(window)();
+svgPolyfill();
+
+$(document).ready(function () {
+    isMac();
+});

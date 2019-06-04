@@ -1,28 +1,12 @@
 @import "./functions"
-@import "vars"
+@import "./vars"
 
-*::-webkit-input-placeholder
-	color: #666
-	opacity: 1
+label
+	margin: 0
 
-*:-moz-placeholder
-	color: #666
-	opacity: 1
-
-*::-moz-placeholder
-	color: #666
-	opacity: 1
-
-*:-ms-input-placeholder
-	color: #666
-	opacity: 1
-
-body input:focus:required:invalid,
-body textarea:focus:required:invalid
-	color: #666
-body input:required:valid,
-body textarea:required:valid
-	color: #666
+input
+	-webkit-appearance: none
+	border-radius: 0
 
 body
 	background: $background-color
@@ -31,7 +15,7 @@ body
 	font-size: $font-size-base
 	line-height: normal
 	min-width: 320px
-	overflow-x: auto
+	overflow-x: hidden
 	position: relative
 	display: flex
 	flex-direction: column
@@ -42,11 +26,15 @@ body
 	//
 	// Disabled by default
 
-	//-webkit-font-smoothing: antialiased
-	//-moz-osx-font-smoothing: grayscale
+	-webkit-font-smoothing: antialiased
+	-moz-osx-font-smoothing: grayscale
 
 a
 	outline: 0
+
+main.content
+	overflow: hidden
+
 
 .hidden
 	display: none

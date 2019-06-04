@@ -20,3 +20,10 @@
 
 @function em($target, $context: 16)
 	@return #{$target/$context}em
+
+
+@function rem($px, $baseSize: $rem-is)
+	@if ($debug)
+		@return $px
+	@else
+		@return #{$px/$baseSize}rem

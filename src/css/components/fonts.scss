@@ -29,9 +29,10 @@ $fonts: (
 
 @mixin getFontLinks($font, $style) {
     src:
-        url("../fonts/" + $font + "-" + $style + ".woff") format("woff"),
         url("../fonts/" + $font + "-" + $style + ".eot"),
-        url("../fonts/" + $font + "-" + $style + ".eot#iefix") format('embedded-opentype'),
+        url("../fonts/" + $font + "-" + $style + ".eot#iefix") format("embedded-opentype"),
+        url("../fonts/" + $font + "-" + $style + ".woff2") format("woff2"),
+        url("../fonts/" + $font + "-" + $style + ".woff") format("woff"),
         url("../fonts/" + $font + "-" + $style + ".ttf") format('truetype');
 }
 
