@@ -1,6 +1,6 @@
 {
   "name": "starter_template",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "It's a starter template for a web-developer.  I'll try to do all the best for improve it :3",
   "main": "gulpfile.js",
   "scripts": {
@@ -57,7 +57,7 @@
     "lost": "^8.3.1",
     "postcss-import": "^12.0.1",
     "postcss-short": "^5.0.0",
-    "webpack": "^4.32.2",
+    "webpack": "^4.33.0",
     "webpack-stream": "^5.2.1",
     "webpackbar": "^3.1.5",
     "yargs": "^13.2.4"
