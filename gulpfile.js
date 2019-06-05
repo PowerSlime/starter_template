@@ -85,7 +85,7 @@ const paths = {
     },
 
     watch: {
-        css: `${config.path.source}/**/*.{sass,scss}`,
+        css: `${config.path.source}/**/*.{sass,scss,css}`,
         fonts: `${config.path.source}/fonts/**/*`,
         img: `${config.path.source}/img/**/*`,
         js: `${config.path.source}/**/*.js`,
